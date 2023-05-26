@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include <fstream>
-#include <windows.h>
+#include <locale.h>
 
 class adress {
     std::string city;
@@ -30,8 +30,7 @@ public:
 };
 
 int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
+    setlocale(LC_ALL, "Russian");
     int size;
     std::string city;
     std::string street;
@@ -41,8 +40,7 @@ int main() {
     std::ifstream fin("in.txt");
     std::ofstream fout("out.txt");
 
-
-    if (fin.is_open()) {    
+    if (fin.is_open() && fout.is_open()) {    
         fin >> size;
         adress* arr = new adress[size];
         for (int i = 0; i < size; i++) {
