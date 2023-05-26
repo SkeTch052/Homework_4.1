@@ -1,20 +1,66 @@
-﻿// Homework_4.1.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <string>
+#include <fstream>
+#include <windows.h>
 
-#include <iostream>
+class adress {
+    std::string city;
+    std::string street;
+    int house;
+    int apart;
+public:
+    adress(std::string city, std::string street, int house, int apart) { };
+    adress() {
+        city = "Москва";
+        street = "Пушкина";
+        house = 1;
+        apart = 1;
+    }
+    void set_adress(std::string user_city, std::string user_street, int user_house, int user_apart) {
+        city = user_city;
+        street = user_street;
+        house = user_house;
+        apart = user_apart;
+    }
+    std::string get_output_adress() {
+        std::string s_house = std::to_string(house);
+        std::string s_apart = std::to_string(apart);
+        return city + ", " + street + ", " + s_house + ", " + s_apart;
+    }
+};
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int main() {
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    int size;
+    std::string city;
+    std::string street;
+    int house;
+    int apart;
+
+    std::ifstream fin("in.txt");
+    std::ofstream fout("out.txt");
+
+
+    if (fin.is_open()) {    
+        fin >> size;
+        adress* arr = new adress[size];
+        for (int i = 0; i < size; i++) {
+            fin >> city >> street >> house >> apart;
+            arr[i].set_adress(city, street, house, apart);
+        }
+        fout << size << std::endl;
+        for (int i = 0; i < size; i++) {
+            fout << arr[i].get_output_adress() << std::endl;
+        }
+        delete[] arr;
+        std::cout << "Данные успешно записаны в файл." << std::endl;
+    }
+    else {
+        std::cout << "Ошибка! Не удалось открыть файл." << std::endl;
+    }
+
+    fin.close();
+    fout.close();
+    return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
